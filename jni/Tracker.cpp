@@ -10,15 +10,15 @@
 Tracker::Tracker(std::string faceCascade, std::string eye) {
 	this->mFaceXml = faceCascade;
 	this->mEyeXml = eye;
-	this->mFaceMinSize = 0;
-	this->mEyeMinSize = 0;
+	this->mFaceMinSize = 200;
+	this->mEyeMinSize = 30;
 }
 
-void Tracker::setEyeMinSize(float size) {
+void Tracker::setEyeMinSize(int size) {
 	mEyeMinSize = size;
 }
 
-void Tracker::setFaceMinSize(float size) {
+void Tracker::setFaceMinSize(int size) {
 	mFaceMinSize = size;
 }
 
@@ -46,7 +46,7 @@ void Tracker::process(Mat rgba , Mat gray) {
 std::vector<Rect> Tracker::detectFaces(Mat rgba , Mat gray) {
 	std::vector<Rect> faces;
 	mFaceClassifier.detectMultiScale(gray, faces, 1.3, 2,
-			0 | CV_HAAR_SCALE_IMAGE, Size(400 , 400));
+			0 | CV_HAAR_SCALE_IMAGE, Size(mFaceMinSize , mFaceMinSize));
 
 	return faces;
 }
@@ -61,7 +61,7 @@ std::vector<Rect> Tracker::detectEyes(Mat rgba , Mat gray, std::vector<Rect> fac
 		Mat roi = gray(faces[i]);
 		Mat rgbaRoi = rgba(faces[i]);
 		mEyeClassifier.detectMultiScale(roi, eyes, 1.1, 2,
-				0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
+				0 | CV_HAAR_SCALE_IMAGE, Size(mEyeMinSize, mEyeMinSize));
 
 		for( int j = 0 ; j < eyes.size() ; j++ ){
 

@@ -16,8 +16,8 @@ private:
 	std::string mFaceXml;
 	std::string mEyeXml;
 
-	float mFaceMinSize;
-	float mEyeMinSize;
+	int mFaceMinSize;
+	int mEyeMinSize;
 
 	CascadeClassifier mFaceClassifier;
 	CascadeClassifier mEyeClassifier;
@@ -31,9 +31,9 @@ public:
 
 	bool init();
 
-	void setFaceMinSize(float);
+	void setFaceMinSize(int);
 
-	void setEyeMinSize(float);
+	void setEyeMinSize(int);
 
 	void process(Mat , Mat);
 
